@@ -1,9 +1,8 @@
 # pesten-game
 
 #Development Dependencies:
-
 babel-cli
-babel-preset-es2015 
+babel-preset-es2015
 babel-watch
 
 #Development
