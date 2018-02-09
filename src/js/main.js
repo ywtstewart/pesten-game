@@ -25,9 +25,17 @@ import Card from "./card";
     ],
     people = ["Alice", "Bob", "Carol", "Jay"];
 
-  function log(message) {
-    document.write('<p>' + message + '</p>');
+    function write(data){
+document.write(data);
+    }
 
+  function log(message) {
+    write('<p>' + message + '</p>');
+
+  }
+
+  function logPlayed(name, card){
+   write('<p>' + name + ' palyed ' + card +'</p>');
   }
 
   function matchSuitColor(cards1) {
@@ -144,17 +152,19 @@ import Card from "./card";
       if (typeof cardNumberMatch != 'boolean') {
         aflegStapel.push(cardNumberMatch[0]);
         players[i].cards.splice(cardNumberMatch[1], 1);
-        log(players[i].getName + ' played ' + cardNumberMatch[0].toString);
+        logPlayed(players[i].getName,cardNumberMatch[0].toString);
 
       } else if (typeof suitColorMatch != 'boolean') {
         aflegStapel.push(suitColorMatch[0]);
         players[i].cards.splice(suitColorMatch[1], 1);
-        log(players[i].getName + ' played ' + suitColorMatch[0].toString);
+        logPlayed(players[i].getName,suitColorMatch[0].toString);
 
       } else if (typeof suitColorMatch == 'boolean' && typeof cardNumberMatch == 'boolean') {
+        let nextCard =  deelStapel[0].toString || ''
+        log(players[i].getName + ' does not have a suitable card, taking from deck ' + nextCard );
         players[i].cards.push(deelStapel[0]);
         deelStapel.splice(0, 1);
-        log(players[i].getName + ' does not have a suitable card, taking from deck ' + players[i].cards[players[i].cards.length - 1].toString);
+
         deelStapel.push(...aflegStapel);
         shuffleCards(deelStapel);
         aflegStapel.splice(0, aflegStapel.length);
