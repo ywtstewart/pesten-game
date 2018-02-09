@@ -118,20 +118,6 @@ var Player = function () {
   return Player;
 }();
 
-function getPlayersNames() {
-  var playersString = '';
-  for (var player in players) {
-
-    if (player < players.length - 1) {
-      playersString += players[player].getName;
-      playersString += ', ';
-    } else {
-      playersString += players[player].getName;
-    }
-  }
-  return playersString;
-}
-
 function log(message) {
   document.write('<p>' + message + '</p>');
 }
@@ -207,11 +193,25 @@ function setTopCard() {
   log('Top Card is: ' + aflegStapel[0].toString);
 }
 
+function getPlayersNames() {
+  var playersString = '';
+  if (players) {
+    for (var player in players) {
+      playersString += players[player].getName;
+      if (player < players.length - 1) {
+        playersString += ', ';
+      }
+    }
+  }
+  return playersString;
+}
+
 function initGame() {
-  log('The game has been started with ' + getPlayersNames());
   createCards();
   createPlayers();
   shuffleCards(cards);
+  var playerNames = getPlayersNames();
+  log('The game has been started with ' + playerNames);
   dealCards();
   setTopCard();
 }
