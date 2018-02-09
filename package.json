@@ -1,0 +1,17 @@
+{
+  "name": "pesten-game",
+  "version": "1.0.0",
+  "description": "Pesten Game",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel --presets es2015 src/js -d dist",
+    "start": "babel-watch src/js/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-watch": "^2.0.7"
+  }
+}
