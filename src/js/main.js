@@ -103,24 +103,6 @@ class Player {
 
 
 
-function getPlayersNames() {
-  let playersString = '';
-  for (let player in players) {
-
-    if (player < players.length - 1) {
-      playersString += players[player].getName;
-      playersString += ', ';
-
-    } else {
-      playersString += players[player].getName;
-    }
-
-  }
-  return playersString;
-}
-
-
-
 
 
 function log(message) {
@@ -165,12 +147,16 @@ function createPlayers() {
   }
 }
 
+
+
 function shuffleCards(cards) {
   cards.sort(function() {
     return 0.5 - Math.random()
   })
   return cards;
 }
+
+
 
 function dealCards() {
   for (let player in players) {
@@ -203,13 +189,26 @@ function setTopCard() {
 
 }
 
+function getPlayersNames() {
+  let playersString = '';
+  if(players){
+  for(let player in players){
+    playersString += players[player].getName;
+    if(player < players.length - 1){
+     playersString += ', '
+    }
+  }
+}
+  return playersString;
+}
 
 
 function initGame() {
-  log('The game has been started with ' + getPlayersNames())
   createCards();
   createPlayers();
   shuffleCards(cards);
+  let playerNames =  getPlayersNames();
+  log('The game has been started with ' + playerNames )
   dealCards();
   setTopCard();
 }
