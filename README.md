@@ -1,6 +1,10 @@
 # pesten-game
 
-1. NPM Install
-2. NPM Start (for Development)
+#Development Dependencies:
+babel-cli
+babel-preset-es2015 
+babel-watch
 
-To view output open index.html in browser.
+#Development
+1. Run: npm install
+2. Run: npm run build
