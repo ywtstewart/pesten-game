@@ -1,10 +1,74 @@
-"use strict";
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Card = function () {
+  function Card() {
+    var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var suit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+    _classCallCheck(this, Card);
+
+    this.number = number;
+    this.suit = suit;
+  }
+
+  _createClass(Card, [{
+    key: 'getSuitType',
+    value: function getSuitType() {
+      return this.suit["type"];
+    }
+  }, {
+    key: 'getSuitColor',
+    value: function getSuitColor() {
+      return this.suit["color"];
+    }
+  }, {
+    key: 'suitType',
+    get: function get() {
+      return this.getSuitType();
+    }
+  }, {
+    key: 'suitColor',
+    get: function get() {
+      return this.getSuitColor();
+    }
+  }, {
+    key: 'cardNumber',
+    get: function get() {
+      return this.number;
+    }
+  }, {
+    key: 'toString',
+    get: function get() {
+      return '' + this.getSuitType() + ' ' + this.number;
+    }
+  }]);
+
+  return Card;
+}();
+
+exports.default = Card;
+
+},{}],2:[function(require,module,exports){
+"use strict";
+
+var _player = require("./player");
+
+var _player2 = _interopRequireDefault(_player);
+
+var _card = require("./card");
+
+var _card2 = _interopRequireDefault(_card);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cards = [],
     players = [],
@@ -26,97 +90,6 @@ var cards = [],
   "color": 2
 }],
     people = ["Alice", "Bob", "Carol", "Jay"];
-
-var Card = function () {
-  function Card() {
-    var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var suit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    _classCallCheck(this, Card);
-
-    this.number = number;
-    this.suit = suit;
-  }
-
-  _createClass(Card, [{
-    key: "getSuitType",
-    value: function getSuitType() {
-      return this.suit["type"];
-    }
-  }, {
-    key: "getSuitColor",
-    value: function getSuitColor() {
-      return this.suit["color"];
-    }
-  }, {
-    key: "suitType",
-    get: function get() {
-      return this.getSuitType();
-    }
-  }, {
-    key: "suitColor",
-    get: function get() {
-      return this.getSuitColor();
-    }
-  }, {
-    key: "cardNumber",
-    get: function get() {
-      return this.number;
-    }
-  }, {
-    key: "toString",
-    get: function get() {
-      return '' + this.getSuitType() + ' ' + this.number;
-    }
-  }]);
-
-  return Card;
-}();
-
-var Player = function () {
-  function Player() {
-    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var cards = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    _classCallCheck(this, Player);
-
-    this.name = name;
-    this.cards = cards;
-  }
-
-  _createClass(Player, [{
-    key: "getCardsString",
-    value: function getCardsString() {
-      var string = '';
-      for (var card in this.cards) {
-        string += this.cards[card].suitType + ' ' + this.cards[card].cardNumber + '  ';
-      }
-      return string;
-    }
-  }, {
-    key: "getCards",
-    get: function get() {
-      return this.cards;
-    }
-  }, {
-    key: "cardSum",
-    get: function get() {
-      return this.getCardsString();
-    }
-  }, {
-    key: "set",
-    set: function set(cards) {
-      this.cards = cards;
-    }
-  }, {
-    key: "getName",
-    get: function get() {
-      return this.name;
-    }
-  }]);
-
-  return Player;
-}();
 
 function log(message) {
   document.write('<p>' + message + '</p>');
@@ -145,7 +118,7 @@ function matchCardNumber(cards1) {
 function createCards() {
   for (var suit in suits) {
     for (var value in values) {
-      var card = new Card(values[value], suits[suit]);
+      var card = new _card2.default(values[value], suits[suit]);
       cards.push(card);
     }
   }
@@ -153,7 +126,7 @@ function createCards() {
 
 function createPlayers() {
   for (var person in people) {
-    var player = new Player(people[person]);
+    var player = new _player2.default(people[person]);
     players.push(player);
   }
 }
@@ -175,7 +148,7 @@ function dealCards() {
     log(players[player].getName + ' has been dealt: ' + getPlayerCards(players[player].getCards));
   }
 
-  deelStapel.push.apply(deelStapel, _toConsumableArray(cards));
+  deelStapel.push.apply(deelStapel, cards);
 }
 
 function getPlayerCards(cards) {
@@ -214,6 +187,7 @@ function initGame() {
   log('The game has been started with ' + playerNames);
   dealCards();
   setTopCard();
+  playGame();
 }
 
 function playGame() {
@@ -221,6 +195,7 @@ function playGame() {
 
   do {
     i++;
+
     if (i == players.length) {
       i = 0;
     }
@@ -263,4 +238,63 @@ function playGame() {
 }
 
 initGame();
-playGame();
+
+},{"./card":1,"./player":3}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function () {
+  function Player() {
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var cards = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, Player);
+
+    this.name = name;
+    this.cards = cards;
+  }
+
+  _createClass(Player, [{
+    key: 'getCardsString',
+    value: function getCardsString() {
+      var string = '';
+      for (var card in this.cards) {
+        string += this.cards[card].suitType + ' ' + this.cards[card].cardNumber + '  ';
+      }
+      return string;
+    }
+  }, {
+    key: 'getCards',
+    get: function get() {
+      return this.cards;
+    }
+  }, {
+    key: 'cardSum',
+    get: function get() {
+      return this.getCardsString();
+    }
+  }, {
+    key: 'set',
+    set: function set(cards) {
+      this.cards = cards;
+    }
+  }, {
+    key: 'getName',
+    get: function get() {
+      return this.name;
+    }
+  }]);
+
+  return Player;
+}();
+
+exports.default = Player;
+
+},{}]},{},[2]);
