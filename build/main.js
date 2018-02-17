@@ -89,36 +89,35 @@ var cards = [],
   "type": "\u2666",
   "color": 2
 }],
-    people = ["Alice", "Bob", "Carol", "Jay"];
+    people = ["Alice", "Bob", "Nina", "Jay"];
 
 function write(data) {
-  document.write(data);
+  var gamefeed = document.getElementById('gamefeed');
+  var item = document.createElement('li');
+  item.appendChild(document.createTextNode(data));
+  gamefeed.appendChild(item);
 }
 
 function log(message) {
-  write('<p>' + message + '</p>');
+  write(message);
 }
 
 function logPlayed(name, card) {
-  write('<p>' + name + ' palyed ' + card + '</p>');
+  write(name + ' played ' + card);
 }
 
 function matchSuitColor(cards1) {
   for (var card in cards1) {
-    if (cards1[card].suitColor == aflegStapel[aflegStapel.length - 1].suitColor) {
+    if (cards1[card].suitColor === aflegStapel[aflegStapel.length - 1].suitColor) {
       return [cards1[card], card];
-    } else {
-      return false;
     }
   }
 }
 
 function matchCardNumber(cards1) {
   for (var card in cards1) {
-    if (cards1[card].cardNumber == aflegStapel[aflegStapel.length - 1].cardNumber) {
+    if (cards1[card].cardNumber === aflegStapel[aflegStapel.length - 1].cardNumber) {
       return [cards1[card], card];
-    } else {
-      return false;
     }
   }
 }
@@ -204,43 +203,40 @@ function playGame() {
   do {
     i++;
 
-    if (i == players.length) {
+    if (i === players.length) {
       i = 0;
     }
 
     var suitColorMatch = matchSuitColor(players[i].getCards, aflegStapel[aflegStapel.length - 1]);
     var cardNumberMatch = matchCardNumber(players[i].getCards, aflegStapel[aflegStapel.length - 1]);
 
-    if (typeof cardNumberMatch != 'boolean') {
+    if (cardNumberMatch !== false && typeof cardNumberMatch !== "undefined") {
       aflegStapel.push(cardNumberMatch[0]);
       players[i].cards.splice(cardNumberMatch[1], 1);
       logPlayed(players[i].getName, cardNumberMatch[0].toString);
-    } else if (typeof suitColorMatch != 'boolean') {
+    } else if (suitColorMatch !== false && typeof suitColorMatch !== "undefined") {
       aflegStapel.push(suitColorMatch[0]);
       players[i].cards.splice(suitColorMatch[1], 1);
       logPlayed(players[i].getName, suitColorMatch[0].toString);
-    } else if (typeof suitColorMatch == 'boolean' && typeof cardNumberMatch == 'boolean') {
+    } else {
       var nextCard = deelStapel[0].toString || '';
       log(players[i].getName + ' does not have a suitable card, taking from deck ' + nextCard);
       players[i].cards.push(deelStapel[0]);
       deelStapel.splice(0, 1);
-
       deelStapel.push.apply(deelStapel, aflegStapel);
       shuffleCards(deelStapel);
       aflegStapel.splice(0, aflegStapel.length);
       setTopCard();
-    } else {
-      log('Oops someting went wrong!');
     }
 
-    if (players[i].getCards.length == 1) {
+    if (players[i].getCards.length === 1) {
       log(players[i].getName + " has 1 card remaining!");
     }
 
-    if (players[i].getCards.length == 0) {
+    if (players[i].getCards.length === 0) {
       winner.push(players[i]);
     }
-  } while (winner.length == 0);
+  } while (winner.length === 0);
 
   if (winner.length > 0) {
     log(winner[0].getName + ' has won.');

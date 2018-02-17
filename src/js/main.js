@@ -23,20 +23,23 @@ const cards = [],
         "color": 2
       }
     ],
-    people = ["Alice", "Bob", "Carol", "Jay"];
+    people = ["Alice", "Bob", "Nina", "Jay"];
 
 
 function write(data) {
-  document.write(data);
+  const gamefeed = document.getElementById('gamefeed');
+  let item = document.createElement('li');
+  item.appendChild(document.createTextNode(data));
+  gamefeed.appendChild(item);
 }
 
 function log(message) {
-  write('<p>' + message + '</p>');
+  write(message);
 
 }
 
 function logPlayed(name, card) {
-  write('<p>' + name + ' played ' + card + '</p>');
+  write(name + ' played ' + card);
 }
 
 function matchSuitColor(cards1) {
@@ -146,29 +149,24 @@ function playGame() {
     let suitColorMatch = matchSuitColor(players[i].getCards, aflegStapel[aflegStapel.length - 1]);
     let cardNumberMatch = matchCardNumber(players[i].getCards, aflegStapel[aflegStapel.length - 1]);
 
-    if (typeof cardNumberMatch !== 'boolean') {
+    if (cardNumberMatch !== false && typeof cardNumberMatch !== "undefined") {
       aflegStapel.push(cardNumberMatch[0]);
       players[i].cards.splice(cardNumberMatch[1], 1);
       logPlayed(players[i].getName, cardNumberMatch[0].toString);
-
-    } else if (typeof suitColorMatch !== 'boolean') {
+    } else if (suitColorMatch !== false && typeof suitColorMatch !== "undefined") {
       aflegStapel.push(suitColorMatch[0]);
       players[i].cards.splice(suitColorMatch[1], 1);
       logPlayed(players[i].getName, suitColorMatch[0].toString);
 
-    } else if (typeof suitColorMatch === 'boolean' && typeof cardNumberMatch === 'boolean') {
+    } else {
       let nextCard = deelStapel[0].toString || '';
       log(players[i].getName + ' does not have a suitable card, taking from deck ' + nextCard);
       players[i].cards.push(deelStapel[0]);
       deelStapel.splice(0, 1);
-
       deelStapel.push(...aflegStapel);
       shuffleCards(deelStapel);
       aflegStapel.splice(0, aflegStapel.length);
       setTopCard();
-
-    } else {
-      log('Oops someting went wrong!')
     }
 
     if (players[i].getCards.length === 1) {
