@@ -17,7 +17,7 @@ class Card {
   }
 
   get toString() {
-    return '' + this.getSuitType() + ' ' + this.number;
+    return `${this.getSuitType()}${this.number}`;
   }
 
   getSuitType() {

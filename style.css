@@ -1,0 +1,20 @@
+.container{
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+#gamefeed{
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#gamefeed > li{
+   margin: 0;
+   padding: 0;
+}

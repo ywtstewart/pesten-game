@@ -48,7 +48,7 @@ var Card = function () {
   }, {
     key: 'toString',
     get: function get() {
-      return '' + this.getSuitType() + ' ' + this.number;
+      return '' + this.getSuitType() + this.number;
     }
   }]);
 
@@ -89,7 +89,7 @@ var cards = [],
   "type": "\u2666",
   "color": 2
 }],
-    people = ["Alice", "Bob", "Nina", "Jay"];
+    people = ["Quin", "Cari", "Kenny", "Jay"];
 
 function write(data) {
   var gamefeed = document.getElementById('gamefeed');
@@ -152,19 +152,9 @@ function dealCards() {
       players[player].cards.push(cards[rndm]);
       cards.splice(rndm, 1);
     }
-    log(players[player].getName + ' has been dealt: ' + getPlayerCards(players[player].getCards));
+    log(players[player].getName + ' has been dealt: ' + players[player].getPlayerCards());
   }
-
   deelStapel.push.apply(deelStapel, cards);
-}
-
-function getPlayerCards(cards) {
-  var cardsString = ' ';
-  for (var card in cards) {
-    cardsString += cards[card].toString;
-    cardsString += ' - ';
-  }
-  return cardsString;
 }
 
 function setTopCard() {
@@ -200,7 +190,7 @@ function initGame() {
 function playGame() {
   var i = 0;
 
-  do {
+  while (winner.length === 0) {
     i++;
 
     if (i === players.length) {
@@ -236,10 +226,10 @@ function playGame() {
     if (players[i].getCards.length === 0) {
       winner.push(players[i]);
     }
-  } while (winner.length === 0);
+  }
 
   if (winner.length > 0) {
-    log(winner[0].getName + ' has won.');
+    log(winner[0].getName + " has won.");
   }
 }
 
@@ -275,6 +265,18 @@ var Player = function () {
         string += this.cards[card].suitType + ' ' + this.cards[card].cardNumber + '  ';
       }
       return string;
+    }
+  }, {
+    key: 'getPlayerCards',
+    value: function getPlayerCards() {
+      var cardsString = ' ';
+      for (var card in this.cards) {
+        cardsString += '' + this.cards[card].toString;
+        if (card < this.cards.length - 1) {
+          cardsString += ', ';
+        }
+      }
+      return cardsString;
     }
   }, {
     key: 'getCards',

@@ -3,28 +3,27 @@ import Player from "./player";
 import Card from "./card";
 
 const cards = [],
-    players = [],
-    deelStapel = [],
-    aflegStapel = [],
-    winner = [],
-    values = ["1","2","3","4","5","6","7","8","9","10","J","Q","K"],
-    suits = [
-      {
-        "type": "\u2660",
-        "color": 1
-      }, {
-        "type": "\u2663",
-        "color": 1
-      }, {
-        "type": "\u2665",
-        "color": 2
-      }, {
-        "type": "\u2666",
-        "color": 2
-      }
-    ],
-    people = ["Alice", "Bob", "Nina", "Jay"];
-
+  players = [],
+  deelStapel = [],
+  aflegStapel = [],
+  winner = [],
+  values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"],
+  suits = [
+    {
+      "type": "\u2660",
+      "color": 1
+    }, {
+      "type": "\u2663",
+      "color": 1
+    }, {
+      "type": "\u2665",
+      "color": 2
+    }, {
+      "type": "\u2666",
+      "color": 2
+    }
+  ],
+  people = ["Quin", "Cari", "Kenny", "Jay"];
 
 function write(data) {
   const gamefeed = document.getElementById('gamefeed');
@@ -35,7 +34,6 @@ function write(data) {
 
 function log(message) {
   write(message);
-
 }
 
 function logPlayed(name, card) {
@@ -75,7 +73,7 @@ function createPlayers() {
 }
 
 function shuffleCards(cards) {
-  cards.sort(function() {
+  cards.sort(function () {
     return 0.5 - Math.random()
   });
   return cards;
@@ -88,21 +86,9 @@ function dealCards() {
       players[player].cards.push(cards[rndm]);
       cards.splice(rndm, 1);
     }
-    log(players[player].getName + ' has been dealt: ' + getPlayerCards(players[player].getCards));
+    log(players[player].getName + ' has been dealt: ' + players[player].getPlayerCards());
   }
-
   deelStapel.push(...cards);
-
-}
-
-function getPlayerCards(cards) {
-  let cardsString = ' ';
-  for (let card in cards) {
-    cardsString += cards[card].toString;
-    cardsString += ' - ';
-
-  }
-  return cardsString;
 }
 
 function setTopCard() {
@@ -139,7 +125,7 @@ function initGame() {
 function playGame() {
   let i = 0;
 
-  do {
+  while (winner.length === 0) {
     i++;
 
     if (i === players.length) {
@@ -176,12 +162,12 @@ function playGame() {
     if (players[i].getCards.length === 0) {
       winner.push(players[i]);
     }
-
-  } while (winner.length === 0);
+  }
 
   if (winner.length > 0) {
-    log(winner[0].getName + ' has won.');
+    log(`${winner[0].getName} has won.`);
   }
 }
+
 
 initGame();
